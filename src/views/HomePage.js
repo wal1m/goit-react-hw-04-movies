@@ -13,7 +13,6 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <h2>HomePage</h2>
       <MoviesList moviesList={popularMovies} />
      </>
   );

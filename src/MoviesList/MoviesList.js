@@ -1,4 +1,5 @@
-import PopularMoviesItem from "../PopularMoviesItem/PopularMoviesItem";
+import { withRouter } from "react-router-dom";
+import MoviesItem from "../MoviesItem/MoviesItem";
 import { createUseStyles } from "react-jss";
 // import PropTypes from "prop-types";
 
@@ -17,15 +18,23 @@ const useStyles = createUseStyles({
   },
 });
 
-const PopularMoviesList = ({ moviesList }) => {
+const MoviesList = ({ moviesList }) => {
   const classes = useStyles();
+  // const {search=""}=location
+  // console.log(search);
   return (
     <ul className={classes.FilmGallery}>
       {moviesList.map(({ poster_path, id, title }) => (
-        <PopularMoviesItem url={poster_path} key={id} title={title} id={id} />
+        <MoviesItem
+          url={poster_path}
+          key={id}
+          title={title}
+          id={id}
+          // search={search}
+        />
       ))}
     </ul>
   );
 };
 
-export default PopularMoviesList;
+export default withRouter(MoviesList);

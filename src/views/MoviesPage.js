@@ -1,49 +1,30 @@
 import { useState, useEffect } from "react";
 import { createUseStyles } from "react-jss";
-import { getQueryMovies } from "../utils/themovieAPI";
-import MoviesList from "../MoviesList/MoviesList";
+import queryString from "query-string";
 import PropTypes from "prop-types";
 
-// const MoviesPage = () => {
-//   return <h2>MoviesPage</h2>;
-// };
-
-// export default MoviesPage;
+import { getQueryMovies } from "../utils/themovieAPI";
+import MoviesList from "../MoviesList/MoviesList";
 
 const useStyles = createUseStyles({
-  Searchbar: {
-    top: "0",
-    left: "0",
-    position: "sticky",
-    zIndex: "1100",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "64px",
-    paddingRight: "24px",
-    paddingLeft: "24px",
-    paddingTop: "12px",
-    paddingBottom: "12px",
-    color: "#fff",
-    backgroundColor: "#3f51b5",
-    boxShadow:
-      "0px 2px 4px -1px rgba(0, 0, 0, 0.2) 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)",
-  },
-
   SearchForm: {
+    marginTop: "6px",
+    marginBottom: "6px",
     display: "flex",
+    textAlign: "center",
     alignItems: "center",
     width: "100%",
     maxWidth: "600px",
     backgroundColor: "#fff",
+    border: "solid 1px",
     borderRadius: "3px",
     overflow: "hidden",
   },
 
   SearchFormButton: {
     display: "inlineBlock",
-    width: "48px",
-    height: "48px",
+    width: "34px",
+    height: "34px",
     border: "0",
     backgroundImage:
       "url('https://image.flaticon.com/icons/svg/149/149852.svg')",
@@ -85,7 +66,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const MoviesPage = ({}) => {
+const MoviesPage = ({ history, location }) => {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
   const [queryMovies, SetQueryMovies] = useState([]);
@@ -93,37 +74,47 @@ const MoviesPage = ({}) => {
   const classes = useStyles();
 
   const handleSearc = (e) => setSearch(e.target.value);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setQuery(search);
+    if (search !== "") {
+      setQuery(search);
+    }
   };
 
   useEffect(() => {
-    if (query !== "") {
-      getQueryMovies(query).then((data) => SetQueryMovies(data));
-      // console.log(query);
-    }
+    if (query === "" || location.search) return;
+    history.push({
+      ...location,
+      search: `?query=${query}`,
+    });
   }, [query]);
+
+  useEffect(() => {
+    if (location.search !== "") {
+      const parse = queryString.parse(location.search);
+      getQueryMovies(parse.query).then((data) => SetQueryMovies(data));
+    }
+  }, [location.search]);
+
   return (
     <>
-      <header className={classes.Searchbar}>
-        <form className={classes.SearchForm} onSubmit={handleSubmit}>
-          <button type="submit" className={classes.SearchFormButton}>
-            <span className={classes.SearchFormButtonLabel}>Search</span>
-          </button>
+      <form className={classes.SearchForm} onSubmit={handleSubmit}>
+        <input
+          className={classes.SearchFormInput}
+          type="text"
+          // autocomplete="off"
+          // autofocus
+          placeholder="Search movie"
+          onChange={handleSearc}
+          value={search}
+        />
 
-          <input
-            className={classes.SearchFormInput}
-            type="text"
-            // autocomplete="off"
-            // autofocus
-            placeholder="Search images and photos"
-            onChange={handleSearc}
-            value={search}
-          />
-        </form>
-      </header>
-      <MoviesList moviesList={queryMovies} />
+        <button type="submit" className={classes.SearchFormButton}>
+          <span className={classes.SearchFormButtonLabel}>Search</span>
+        </button>
+      </form>
+      <MoviesList moviesList={queryMovies} location={location} />
     </>
   );
 };

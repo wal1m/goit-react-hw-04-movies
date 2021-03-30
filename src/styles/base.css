@@ -28,7 +28,7 @@ img {
 
 li {
   list-style: none;
-}
+  }
 
 ul {
   margin-top: 0;
@@ -36,10 +36,12 @@ ul {
 }
 
 .NavLink {
+  margin: 10px;
   font-size: 18px;
-  color: rgb(53, 155, 113);
+  text-decoration: none;
+  color: #EFEFEF;
 }
 
 .NavLink--active {
-  color: rgb(14, 85, 216);
+  color: rgb(45, 235, 145);
 }
