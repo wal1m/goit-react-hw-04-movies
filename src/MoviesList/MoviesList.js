@@ -1,7 +1,7 @@
 import { withRouter } from "react-router-dom";
 import MoviesItem from "../MoviesItem/MoviesItem";
 import { createUseStyles } from "react-jss";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const useStyles = createUseStyles({
   FilmGallery: {
@@ -20,8 +20,6 @@ const useStyles = createUseStyles({
 
 const MoviesList = ({ moviesList }) => {
   const classes = useStyles();
-  // const {search=""}=location
-  // console.log(search);
   return (
     <ul className={classes.FilmGallery}>
       {moviesList.map(({ poster_path, id, title }) => (
@@ -30,7 +28,6 @@ const MoviesList = ({ moviesList }) => {
           key={id}
           title={title}
           id={id}
-          // search={search}
         />
       ))}
     </ul>
@@ -38,3 +35,7 @@ const MoviesList = ({ moviesList }) => {
 };
 
 export default withRouter(MoviesList);
+
+MoviesList.propTypes = {
+  moviesList: PropTypes.array.isRequired,
+};

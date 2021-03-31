@@ -1,4 +1,4 @@
-import { Route, NavLink, Switch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import routes from "../../routes";
 
 import { createUseStyles } from "react-jss";

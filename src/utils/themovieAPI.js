@@ -70,9 +70,6 @@ const getReviews = async (movieId) => {
   }
 };
 
-// export const getPopularMovies = () =>
-//   axios.get(`/trending/movie/day`).then(({ data }) => data);
-
 export {
   getPopularMovies,
   getQueryMovies,

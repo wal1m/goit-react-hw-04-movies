@@ -26,7 +26,6 @@ const useStyles = createUseStyles({
 
 const MoviesItem = ({ url, title, id, location }) => {
   const classes = useStyles();
-  // console.log(search);
   return (
     <>
       <li className={classes.FilmGalleryItem}>
@@ -55,3 +54,10 @@ const MoviesItem = ({ url, title, id, location }) => {
 };
 
 export default withRouter(MoviesItem);
+
+MoviesItem.propTypes = {
+  url: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
+};

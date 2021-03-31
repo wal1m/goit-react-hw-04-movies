@@ -83,7 +83,7 @@ const MoviesPage = ({ history, location }) => {
   };
 
   useEffect(() => {
-    if (query === "" || location.search) return;
+    if (query === "") return;
     history.push({
       ...location,
       search: `?query=${query}`,
@@ -103,7 +103,7 @@ const MoviesPage = ({ history, location }) => {
         <input
           className={classes.SearchFormInput}
           type="text"
-          // autocomplete="off"
+          autocomplete="off"
           // autofocus
           placeholder="Search movie"
           onChange={handleSearc}
@@ -121,6 +121,7 @@ const MoviesPage = ({ history, location }) => {
 
 export default MoviesPage;
 
-// MoviesPage.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+MoviesPage.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};

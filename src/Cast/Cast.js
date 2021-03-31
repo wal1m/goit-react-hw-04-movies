@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { getCast } from "../utils/themovieAPI";
+import PropTypes from "prop-types";
 
 const Cast = ({ match }) => {
   const [сast, SetСast] = useState([]);
 
   useEffect(() => {
     const { movieId } = match.params;
-    // console.log(movieId);
     getCast(movieId).then((data) => SetСast(data.cast));
-    // console.log(сast);
   }, []);
   return (
     <>
@@ -20,7 +19,6 @@ const Cast = ({ match }) => {
                 className="film-picture"
                 src={`https://image.tmdb.org/t/p/w200${profile_path}`}
                 alt={`foto ${name}`}
-                // className={classes.FilmGalleryItemImage}
               />
             )}
             <h3>{name}</h3>
@@ -32,3 +30,7 @@ const Cast = ({ match }) => {
 };
 
 export default Cast;
+
+Cast.propTypes = {
+  match: PropTypes.object.isRequired,
+};

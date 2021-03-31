@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getReviews } from "../utils/themovieAPI";
-
+import PropTypes from "prop-types";
 
 const Reviews = ({ match }) => {
   const [reviews, SetReviews] = useState([]);
@@ -28,3 +28,7 @@ const Reviews = ({ match }) => {
 };
 
 export default Reviews;
+
+Reviews.propTypes = {
+  match: PropTypes.object.isRequired,
+};
